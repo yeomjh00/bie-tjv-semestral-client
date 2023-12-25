@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <title>Personal Page</title>
+</head>
+<body>
+<h1>Personal Page of <span th:text="${user.username}"></span></h1>
+<div th:switch="${user.userStatus}">
+    <div th:case="'trial'">
+        <p>You are currently trial member</p>
+        <p>You can own 5 music lists, and 30 tracks per list at most!</p>
+    </div>
+    <div th:case="'membership'">
+        <p>You are currently membership member</p>
+        <p>You can own unlimited lists and tracks</p>
+    </div>
+</div>
+
+<a th:href="@{/users/{id}/edit(id=${user.id})}">Edit data</a>
+<a th:href="@{/users/{id}/withdrawal(id=${user.id})}">Delete account</a>
+
+<p>name: <span th:text="${user.realName}"></span></p>
+<p>Self Introduction: <span th:text="${user.introduction}"></span></p>
+<p><a th:href="@{/posts/{id}/postList(id=${user.id})}">All Posts</a></p>
+<p>
+    <a th:href="@{/users/{id}/newpost(id=${user.id})}">Write a Post</a>
+</p>
+<a th:href="@{/users/{id}/myposts(id=${user.id})}">See My Posts</a>
+<a th:href="@{/users/{id}/likedposts(id=${user.id})}">See Liked Posts</a>
+<a th:href="@{/users/{id}/musiclists(id=${user.id})}">See My Music Lists</a>
+<a href="/">Back To Home</a>
+</body>
+</html>

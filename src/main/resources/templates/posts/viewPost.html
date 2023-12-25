@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<div>
+    <div>
+        <h1><span th:text="${post.title}"></span> </h1>
+        <p><span th:text="${post.author.username}"></span></p>
+    </div>
+    <div>
+        <p><span th:text="${post.content}"></span></p>
+        <!--TODO: Media here-->
+        <p><span th:number="${post.likes.size()}"></span> </p>
+    </div>
+</div>
+
+</body>
+</html>

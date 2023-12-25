@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <title>Personal Page Edit</title>
+</head>
+<body>
+<form th:action="@{/users/{id}/edit(id=${user.id})}" method="post">
+    <div>
+        <p>If it isn't changed, same username already exists. Please type another one.</p>
+        <label for="username">UserName</label>
+        <input type="text" id="username" name="username" placeholder="이름을 입력하세요." th:value="${user.username}">
+
+        <label for="introduction">Self Introduction</label>
+        <input type="text" id="introduction" name="introduction" placeholder="자기를 소개할 수 있는 문장을 입력해주세요." th:value="${user.introduction}">
+
+        <label for="userStatus">Membership</label>
+        <input type="checkbox" id="userStatus" name="userStatus" value="membership">
+    </div>
+    <button type="submit">Modify</button>
+</form>
+</body>
+
+
+</html>

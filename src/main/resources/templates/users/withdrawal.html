@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>User Withdrawal</title>
+</head>
+<body>
+    <h1>Are You Sure to Withdraw?</h1>
+    <a href="/">Back To Homepage</a>
+    <p>withdraw <span th:text="${user.username}"></span></p>
+    <p>Type Above sentence if you really want to withdraw.</p>
+    <form th:action="@{/users/{id}/withdrawal(id=${user.id})}" method="post">
+        <label for="confirm"></label>
+        <input type="text" id="confirm" name="confirm" placeholder="type the above sentence">
+        <button type="submit">Withdraw</button>
+    </form>
+</body>
+</html>

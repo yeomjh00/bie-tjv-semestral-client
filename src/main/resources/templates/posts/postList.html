@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Post Title</th>
+                <th>Author</th>
+                <th>Likes</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="post : ${posts}">
+                <td th:text="${post.id}"></td>
+                <td>
+                    <a th:href="@{/posts/{id}(id=${post.id})}" th:text="${post.title}"></a>
+                </td>
+                <td th:text="${post.author.username}"></td>
+                <td th:text="${post.likes.size()}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

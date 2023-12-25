@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymelearf.org">
+
+<body>
+
+<div class="container">
+    <div>
+        <h1>Hello Spring</h1>
+        <p>회원 기능</p>
+        <p><a href="/users/new">회원 가입</a></p>
+        <p><a href="/users/userList">회원 목록</a></p>
+
+        <form action="/" method="post">
+                <label for="userId">Insert your ID for user page</label>
+                <input type="number" min='0' id="userId" name="postedId" placeholder="Insert Your ID">
+            <button type="submit">Move to your page</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
