@@ -41,15 +41,25 @@ public class PostClient {
                 .orElse(Collections.emptyList());
     }
 
-    public PostDto readPostById(Long postId) { // get /posts/{id}
-        setCurrentPost(postId);
-        return currentPostRestClient.get().retrieve().toEntity(PostDto.class).getBody();
-    }
-
     public void create(PostDto data) { // post /posts
         postRestClient.post()
                 .body(data)
                 .retrieve()
                 .toBodilessEntity();
+    }
+
+    public PostDto readPostById(Long postId) { // get /posts/{id}
+        setCurrentPost(postId);
+        return currentPostRestClient.get().retrieve().toEntity(PostDto.class).getBody();
+    }
+
+    public PostDto updatePost(PostDto data) { // put /posts/{id}
+        setCurrentPost(data.getId());
+        return currentPostRestClient.put().body(data).retrieve().toEntity(PostDto.class).getBody();
+    }
+
+    public void deletePost(Long postId) { // delete /posts/{id}
+        setCurrentPost(postId);
+        currentPostRestClient.delete().retrieve().toBodilessEntity();
     }
 }

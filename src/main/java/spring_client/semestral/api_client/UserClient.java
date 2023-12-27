@@ -40,11 +40,11 @@ public class UserClient {
     }
 
 
-    public void create(UserDto data) { // post /users
-        userRestClient.post()
+    public UserDto create(UserDto data) { // post /users
+        return userRestClient.post()
                 .body(data)
                 .retrieve()
-                .toBodilessEntity();
+                .toEntity(UserDto.class).getBody();
     }
 
     public UserDto readCurrentUserInfo() { // get /users/{id}
@@ -54,6 +54,7 @@ public class UserClient {
     }
 
     public boolean userExists(Long userId) {
+        setCurrentUser(userId);
         return currentUserRestClient.get()
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange((request, response) -> {
