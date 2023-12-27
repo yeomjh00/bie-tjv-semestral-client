@@ -31,11 +31,17 @@ public class PostService {
         postClient.create(post);
     }
 
-    //TODO
-//    public PostDto updatePostFromDto(Long userId, PostDto form) {
-//
-//    }
-//
-//    public PostDto deletePost(Long postId) {
-//    }
+    public PostDto updatePostFromDto(Long postId, PostDto form) {
+        PostDto post = PostDto.builder()
+                .id(postId)
+                .title(form.getTitle())
+                .content(form.getContent())
+                .authorUsername(form.getAuthorUsername())
+                .build();
+        return postClient.updatePost(post);
+    }
+
+    public void deletePost(Long postId) {
+        postClient.deletePost(postId);
+    }
 }

@@ -1,5 +1,6 @@
 package spring_client.semestral.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import spring_client.semestral.api_client.UserClient;
 import spring_client.semestral.data_format.UserDto;
@@ -14,6 +15,7 @@ public class UserService {
     private Long currentUserId;
     private UserDto currentUser;
 
+    @Autowired
     public UserService(UserClient userClient) {
         this.userClient = userClient;
     }
@@ -27,8 +29,8 @@ public class UserService {
         return Optional.ofNullable(userClient.readCurrentUserInfo());
     }
 
-    public void create(UserDto data) {
-        userClient.create(data);
+    public UserDto create(UserDto data) {
+        return userClient.create(data);
     }
 
     public boolean setCurrentUser(Long id) {
