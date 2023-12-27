@@ -7,11 +7,11 @@ import lombok.*;
 @NoArgsConstructor @AllArgsConstructor
 @Getter @Setter
 public class UserDto {
-        private Long id;
-        private String username;
-        private String realName;
-        private String userStatus;
-        private String introduction;
+    private Long id;
+    private String username;
+    private String realName;
+    private String userStatus;
+    private String introduction;
 
     @Override
     public String toString() {
@@ -31,7 +31,7 @@ public class UserDto {
                 .build();
     }
 
-    public void setUserStatusByValue(){
-        this.userStatus = this.userStatus == null ? "trial" : "membership";
+    public String getChangedUserStatus(){
+        return this.userStatus = this.userStatus == null ? "trial" : "membership";
     }
 }
