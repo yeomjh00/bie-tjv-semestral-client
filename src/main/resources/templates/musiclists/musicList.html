@@ -8,17 +8,22 @@
         <tr>
             <th>#</th>
             <th>Post Title</th>
+            <th>Author</th>
+            <th>Likes</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="post : ${posts}">
-            <td th:text="${post.}"></td>
-            <td th:href="posts/${post.id}">
-                <span th:text="${post.title}"></span>
+            <td th:text="${post.id}"></td>
+            <td>
+                <a th:href="@{/posts/{id}(id=${post.id})}" th:text="${post.title}"></a>
             </td>
+            <td th:text="${post.authorUsername}"></td>
+            <td th:text="${post.numberOfLikes}"></td>
         </tr>
         </tbody>
     </table>
 </div>
+<a href="/">Back To Home</a>
 </body>
 </html>

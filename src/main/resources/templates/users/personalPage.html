@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Personal Page of <span th:text="${user.username}"></span></h1>
-<div th:switch="${user.userStatus}">
+<div th:switch="${user.changedUserStatus}">
     <div th:case="'trial'">
         <p>You are currently trial member</p>
         <p>You can own 5 music lists, and 30 tracks per list at most!</p>
@@ -22,13 +22,18 @@
 
 <p>name: <span th:text="${user.realName}"></span></p>
 <p>Self Introduction: <span th:text="${user.introduction}"></span></p>
-<p><a th:href="@{/posts/{id}/postList(id=${user.id})}">All Posts</a></p>
+<p><a href="/posts">All Posts</a></p>
 <p>
     <a th:href="@{/users/{id}/newpost(id=${user.id})}">Write a Post</a>
 </p>
-<a th:href="@{/users/{id}/myposts(id=${user.id})}">See My Posts</a>
-<a th:href="@{/users/{id}/likedposts(id=${user.id})}">See Liked Posts</a>
-<a th:href="@{/users/{id}/musiclists(id=${user.id})}">See My Music Lists</a>
+<p>
+    <a th:href="@{/users/{id}/myposts(id=${user.id})}">See My Posts</a>
+    <a th:href="@{/users/{id}/likedposts(id=${user.id})}">See Liked Posts</a>
+</p>
+<p>
+    <a th:href="@{/users/{id}/musics(id=${user.id})}">See My Musics</a>
+    <a th:href="@{/users/{id}/musiclists(id=${user.id})}">See My Music Lists</a>
+</p>
 <a href="/">Back To Home</a>
 </body>
 </html>

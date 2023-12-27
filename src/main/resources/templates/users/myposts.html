@@ -18,11 +18,12 @@
             <td>
                 <a th:href="@{/users/{id}/myposts/{postId}(id=${user.id}, postId=${post.id})}" th:text="${post.title}"></a>
             </td>
-            <td th:text="${post.author.username}"></td>
-            <td th:text="${post.likes.size()}"></td>
+            <td th:text="${post.authorUsername}"></td>
+            <td th:text="${post.numberOfLikes}"></td>
         </tr>
         </tbody>
     </table>
 </div>
+<a th:href="@{/users/{id}(id=${user.id})}">Back To My Page</a>
 </body>
 </html>

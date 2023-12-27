@@ -7,14 +7,15 @@
         <p><a th:href="@{/users/{id}/myposts/{postId}/edit(id=${user.id}, postId=${post.id})}">Edit This Post</a></p>
         <p><a th:href="@{/users/{id}/myposts/{postId}/delete(id=${user.id}, postId=${post.id})}">Delete This Post</a></p>
         <h1><span th:text="${post.title}"></span> </h1>
-        <p><span th:text="${post.author.username}"></span></p>
+        <p><span th:text="${post.authorUsername}"></span></p>
     </div>
     <div>
         <p><span th:text="${post.content}"></span></p>
         <!--TODO: Media here-->
-        <p><span th:number="${post.likes.size()}"></span> </p>
+        <p><span th:number="${post.numberOfLikes}"></span> </p>
     </div>
 </div>
+<a th:href="@{/users/{id}/myposts(id=${user.id})}">Back To My Posts</a>
 
 </body>
 </html>
