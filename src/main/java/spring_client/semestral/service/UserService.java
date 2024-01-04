@@ -26,7 +26,7 @@ public class UserService {
 
     public Optional<UserDto> readById(Long id) {
         userClient.setCurrentUser(id);
-        return Optional.ofNullable(userClient.readCurrentUserInfo());
+        return userClient.readCurrentUserInfo();
     }
 
     public UserDto create(UserDto data) {
@@ -35,10 +35,10 @@ public class UserService {
 
     public boolean setCurrentUser(Long id) {
         userClient.setCurrentUser(id);
-        UserDto currentUserInfo = userClient.readCurrentUserInfo();
+        Optional<UserDto> currentUserInfo = userClient.readCurrentUserInfo();
         this.currentUserId = id;
-        this.currentUser = currentUserInfo;
-        return currentUserInfo != null;
+        currentUserInfo.ifPresent(userDto -> this.currentUser = userDto);
+        return currentUserInfo.isPresent();
     }
 
     public boolean isCurrentUser() {
@@ -51,10 +51,6 @@ public class UserService {
         if (isCurrentUser()) {
             userClient.updateCurrentUser(updatedUserInfo);
         }
-    }
-
-    public UserDto readOne() {
-        return userClient.readCurrentUserInfo();
     }
 
     public boolean CheckValidityAndDuplicate(UserDto editedUser) {
