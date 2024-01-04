@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<h5>Add and share your music</h5>
+
+<form th:action="@{/users/{id}/musics/new(id=${userId})}" method="post">
+    <div class="form-group">
+
+        <label for="link">Put YouTube Link</label>
+        <input type="text" id="link" name="uri" placeholder="Put YouTube link you want.">
+
+        <label for="title">Title</label>
+        <input type="text" id="title" name="title" placeholder="Type title of the link">
+
+        <label for="artist">Artist</label>
+        <input type="text" id="artist" name="artist" placeholder="Who is artist of this link">
+    </div>
+    <button type="submit">Submit</button>
+</form>
+
+</body>
+</html>

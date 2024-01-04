@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<div>
+    <h5 th:text="${music.title}"></h5>
+    <p>Song by <span th:text="${music.artist}"></span></p>
+</div>
+
+<div th:if="${music.uri}">
+    <div th:utext="${music.uri}"></div>
+</div>
+
+</body>
+</html>

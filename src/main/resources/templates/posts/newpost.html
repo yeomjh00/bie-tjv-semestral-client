@@ -3,23 +3,31 @@
 
 
 <html lang="en">
-<head>
-    New Post
-</head>
-<div>
+<body>
+<div class="container">
+    <h2>New Post</h2>
     <form th:action="@{/users/{id}/newpost(id=${user.id})}" method="post">
-        <div>
-            <p>
+        <div class="test_input">
             <label for="title">Title</label>
-            <input type="text" id="title" name="title" placeholder="Type Title of the Post">
-            </p>
-
+            <input type="text" id="title" name="title" placeholder="Type Title of the Post" required>
+        </div>
+        <div class="test_input">
             <label for="content">Content</label>
-            <input type="text" id="content" name="content" placeholder="Write the Content">
-
-            <!--TODO: Meida URI 추가하기-->
+            <input type="text" id="content" name="content" placeholder="Write the Content" required>
+        </div>
+        <div class="test_input">
+            <label for="imageURL">Image URL</label>
+            <textarea id="imageURL" name="unhandledPictures" placeholder="Image URL Format: URL;height;width"></textarea>
+        </div>
+        <div class="test_input">
+            <label for="song ID">Song ID</label>
+            <input type="number" id="song ID" name="songId" placeholder="Insert Song ID">
         </div>
         <button type="submit">Submit</button>
-        </form>
+    </form>
+    <p>
+        <a th:href="@{/users/{id}(id=${user.id})}">Back to User Page</a>
+    </p>
 </div>
+</body>
 </html>

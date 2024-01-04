@@ -3,27 +3,29 @@
 
 <body>
 <div>
+    <p>
+        <a th:href="@{/users/{id}/musiclists/new(id=${userId})}">Add New MusicList</a>
+    </p>
+    <p> Trial member can have 3 lists, and 30 musics per list at a time. </p>
     <table>
         <thead>
         <tr>
             <th>#</th>
-            <th>Post Title</th>
-            <th>Author</th>
-            <th>Likes</th>
+            <th>List Name</th>
+            <th>Description</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="post : ${posts}">
-            <td th:text="${post.id}"></td>
+        <tr th:each="musiclist, listStat : ${musiclists}">
+            <td th:text="${listStat.index + 1}"></td>
             <td>
-                <a th:href="@{/posts/{id}(id=${post.id})}" th:text="${post.title}"></a>
+                <a th:href="@{/users/{id}/musiclists/{musicListId}(id=${userId}, musicListId=${musiclist.id})}" th:text="${musiclist.listName}"></a>
             </td>
-            <td th:text="${post.authorUsername}"></td>
-            <td th:text="${post.numberOfLikes}"></td>
+            <td th:text="${musiclist.description}"></td>
         </tr>
         </tbody>
     </table>
 </div>
-<a href="/">Back To Home</a>
+<a th:href="@{/users/{id}(id=${userId})}">Back To User Page</a>
 </body>
 </html>

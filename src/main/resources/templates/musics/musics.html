@@ -1,29 +1,39 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
+<head>
+    <title>All musics you can access</title>
+</head>
+
 <body>
 <div>
-    <table>
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>Post Title</th>
-            <th>Author</th>
-            <th>Likes</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="post : ${posts}">
-            <td th:text="${post.id}"></td>
-            <td>
-                <a th:href="@{/posts/{id}(id=${post.id})}" th:text="${post.title}"></a>
-            </td>
-            <td th:text="${post.authorUsername}"></td>
-            <td th:text="${post.numberOfLikes}"></td>
-        </tr>
-        </tbody>
-    </table>
+
+    <div>
+        <p>
+            <a th:href="@{/users/{id}/musics/new(id=${userId})}">Add New Music</a>
+        </p>
+        <table>
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Music Title</th>
+                <th>Artist</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="music: ${musics}">
+                <td th:text="${music.id}"></td>
+                <td>
+                    <a th:href="@{/users/{id}/musics/{music_id}(id=${userId}, music_id=${music.id})}" th:text="${music.title}"></a>
+                </td>
+                <td th:text="${music.artist}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <a th:href="@{/users/{id}(id=${userId})}">Back to User Page</a>
+
+    </div>
 </div>
-<a href="/">Back To Home</a>
+
 </body>
 </html>

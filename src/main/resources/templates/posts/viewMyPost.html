@@ -6,13 +6,60 @@
     <div>
         <p><a th:href="@{/users/{id}/myposts/{postId}/edit(id=${user.id}, postId=${post.id})}">Edit This Post</a></p>
         <p><a th:href="@{/users/{id}/myposts/{postId}/delete(id=${user.id}, postId=${post.id})}">Delete This Post</a></p>
-        <h1><span th:text="${post.title}"></span> </h1>
-        <p><span th:text="${post.authorUsername}"></span></p>
+        <h1>Title: <span th:text="${post.title}"></span> </h1>
+        <p>Writer: <span th:text="${post.authorUsername}"></span></p>
     </div>
+
     <div>
         <p><span th:text="${post.content}"></span></p>
-        <!--TODO: Media here-->
-        <p><span th:number="${post.numberOfLikes}"></span> </p>
+    </div>
+    <!-- Images -->
+    <div>
+        <div th:each="image : ${post.pictureDtos}">
+            <!-- Image Out -->
+            <img th:src="${image.uri}" th:alt="Image" th:height="${image.height}" th:width="${image.width}">
+        </div>
+    </div>
+
+    <!--- YouTube Link if it exists-->
+    <div th:if="${post.musicDto}">
+        <div th:utext="${post.musicDto.uri}"></div>
+    </div>
+
+    <!---Like/Unlike-->
+    <p>Likes: <span th:text="${post.numberOfLikes}"></span></p>
+    <div>
+        <input type="number" id="userIdInput" placeholder="User ID">
+        <button onclick="sendPostRequest()">Like</button>
+        <button onclick="sendDeleteRequest()">Unlike</button>
+
+        <script>
+            async function sendPostRequest() {
+                const userId = document.getElementById('userIdInput').value;
+                const currentURL = window.location.href;
+                const postId = currentURL.substring(currentURL.lastIndexOf('/') + 1);
+                const response = await fetch(`/posts/${postId}/like?userId=${userId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                        // 필요에 따라 다른 헤더 추가
+                    },
+                    body: JSON.stringify({action: 'like'}) // 좋아요와 관련된 데이터 (필요에 따라 다름)
+                });
+            }
+
+            async function sendDeleteRequest() {
+                const userId = document.getElementById('userIdInput').value;
+                const currentURL = window.location.href;
+                const postId = currentURL.substring(currentURL.lastIndexOf('/') + 1);
+                const response = await fetch(`/posts/${postId}/like?userId=${userId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+            }
+        </script>
     </div>
 </div>
 <a th:href="@{/users/{id}/myposts(id=${user.id})}">Back To My Posts</a>

@@ -9,10 +9,21 @@
     </div>
     <div>
         <p><span th:text="${post.content}"></span></p>
-        <!--TODO: Media here-->
-        <p><span th:number="${post.numberOfLikes}"></span> </p>
+        <!-- Images -->
+        <div>
+            <div th:each="image : ${post.pictureDtos}">
+                <!-- Image Out -->
+                <img th:src="${image.uri}" th:alt="Image" th:height="${image.height}" th:width="${image.width}">
+            </div>
+        </div>
+
+        <!--- YouTube Link if it exists-->
+        <div th:if="${post.musicDto}">
+            <div th:utext="${post.musicDto.uri}"></div>
+        </div>
 
         <!---Like/Unlike-->
+        <p>Likes: <span th:text="${post.numberOfLikes}"></span> </p>
         <div>
             <input type="number" id="userIdInput" placeholder="User ID">
             <button onclick="sendPostRequest()">Like</button>

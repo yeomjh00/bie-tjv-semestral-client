@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<body>
+
+<form th:action="@{/users/{id}/musiclists/{musicListId}/edit(id=${userId}, musicListId=${musicListId})}" method="post">
+    <label for="listName">listName</label>
+    <input type="text" id="listName" name="listName" placeholder="list name to be Changed." th:value="${musiclist.listName}">
+
+    <label for="description">Self Introduction</label>
+    <input type="text" id="description" name="description" placeholder="Describe your Music List." th:value="${musiclist.description}">
+
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Title</th>
+                <th>Artist</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr th:each="music : ${musiclist.track}">
+                <td><input type="checkbox" th:name="'musicIds'" th:value="${music.id}"/></td>
+                <td th:text="${music.title}">Song Title</td>
+                <td th:text="${music.artist}">Artist</td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <input type="submit" value="Remove selected musics from the list">
+</form>
+
+</body>
+</html>

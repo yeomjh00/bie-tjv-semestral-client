@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Choose musics you want, and press "ADD" button</title>
+</head>
+<body>
+<form th:action="@{/users/{id}/musiclists/{musicListId}/add(id=${userId}, musicListId=${musicListId})}" method="post">
+
+    <table>
+        <thead>
+        <tr>
+            <th></th>
+            <th>Title</th>
+            <th>Artist</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="music : ${musics}">
+            <td><input type="checkbox" th:name="'musicIds'" th:value="${music.id}"/></td>
+            <td th:text="${music.title}">Song Title</td>
+            <td th:text="${music.artist}">Artist</td>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+    <input type="submit" value="Add to List">
+</form>
+
+</body>
+</html>

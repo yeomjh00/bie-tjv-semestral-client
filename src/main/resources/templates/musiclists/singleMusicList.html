@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title th:text="${musiclist.listName}"></title>
+</head>
+
+<body>
+    <h5><span th:text="${musiclist.description}"></span> </h5>
+    <p>
+        <a th:href="@{/users/{user_id}/musiclists/{musiclist_id}/delete(user_id=${userId}, musiclist_id=${musicListId})}">Delete This List</a>
+    </p>
+    <p>
+        <a th:href="@{/users/{user_id}/musiclists/{musiclist_id}/add(user_id=${userId}, musiclist_id=${musiclist.id})}">Add Musics</a>
+    </p>
+    <p>
+        <a th:href="@{/users/{user_id}/musiclists/{musiclist_id}/edit(user_id=${userId}, musiclist_id=${musiclist.id})}">Edit List</a>
+    </p>
+
+    <div>
+        <p>Track List</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Artist</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr th:each="music, musicStat : ${musiclist.track}">
+                    <td th:text="${musicStat.index+1}"></td>
+                    <td>
+                        <a th:href="@{/users/{user_id}/musics/{music_id}(user_id=${userId}, music_id=${music.id})}" th:text="${music.title}"></a>
+                    </td>
+                    <td th:text="${music.artist}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+        <a th:href="@{/users/{user_id}/musiclists(user_id=${userId})}">Back to MusicLists</a>
+
+</body>
+</html>
