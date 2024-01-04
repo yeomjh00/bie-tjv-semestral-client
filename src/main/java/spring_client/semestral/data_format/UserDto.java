@@ -1,11 +1,9 @@
 package spring_client.semestral.data_format;
 
-
 import lombok.*;
 
-@Builder
 @NoArgsConstructor @AllArgsConstructor
-@Getter @Setter
+@Getter @Setter @Builder
 public class UserDto {
     private Long id;
     private String username;
@@ -13,25 +11,18 @@ public class UserDto {
     private String userStatus;
     private String introduction;
 
-    @Override
-    public String toString() {
-        return "UserDto{" +
-                "username='" + username + '\'' +
-                ", realName='" + realName + '\'' +
-                '}';
-    }
-
-    public static UserDto notFound(){
+    public static UserDto userNotFound(){
         return UserDto.builder()
                 .id(-1L)
-                .username("Not found")
-                .realName("Not found")
-                .userStatus("Not found")
-                .introduction("User Not Found! Check ID.")
+                .username("User Not Found")
+                .realName("User Not Found")
+                .userStatus("User Not Found")
+                .introduction("User Not Found")
                 .build();
     }
 
-    public String getChangedUserStatus(){
-        return this.userStatus = this.userStatus == null ? "trial" : "membership";
+    public String getChangedUserStatus() {
+        if(null == userStatus) return "trial";
+        return userStatus.equals("membership") ? "membership" : "trial";
     }
 }
