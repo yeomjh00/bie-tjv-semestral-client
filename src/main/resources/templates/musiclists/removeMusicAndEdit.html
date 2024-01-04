@@ -5,11 +5,15 @@
 <body>
 
 <form th:action="@{/users/{id}/musiclists/{musicListId}/edit(id=${userId}, musicListId=${musicListId})}" method="post">
-    <label for="listName">listName</label>
+    <p>
+    <label for="listName">Name of List</label>
     <input type="text" id="listName" name="listName" placeholder="list name to be Changed." th:value="${musiclist.listName}">
+    </p>
 
-    <label for="description">Self Introduction</label>
+    <p>
+    <label for="description">Description of List</label>
     <input type="text" id="description" name="description" placeholder="Describe your Music List." th:value="${musiclist.description}">
+    </p>
 
     <table>
         <thead>

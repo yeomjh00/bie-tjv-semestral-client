@@ -8,17 +8,24 @@
   <form action="/users/new" method="post">
     <div class="form-group">
 
-      <label for="realName">이름</label>
-      <input type="text" id="realName" name="realName" placeholder="이름을 입력하세요.">
+      <p>
+      <label for="username">user name</label>
+      <input type="text" id="username" name="username" placeholder="Insert your user name">
+      </p>
 
-      <label for="username">유저 이름</label>
-      <input type="text" id="username" name="username" placeholder="이름을 입력하세요.">
+      <p>
+        <label for="realName">real name</label>
+        <input type="text" id="realName" name="realName" placeholder="Insert your real name">
+      </p>
 
+      <p>
       <label for="introduction">Self Introduction</label>
-      <input type="text" id="introduction" name="introduction" placeholder="자기를 소개할 수 있는 문장을 입력해주세요.">
-
+      <input type="text" id="introduction" name="introduction" placeholder="Introduce yourself">
+      </p>
+      <p>
       <label for="userStatus">Membership</label>
       <input type="checkbox" id="userStatus" name="userStatus" value="membership">
+      </p>
     </div>
     <button type="submit">등록</button>
   </form>

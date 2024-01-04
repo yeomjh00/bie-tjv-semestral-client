@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <title th:text="${musiclist.listName}"></title>
-</head>
-
 <body>
+    <h4>
+        List Title: <span th:text="${musiclist.listName}"></span>
+    </h4>
     <h5><span th:text="${musiclist.description}"></span> </h5>
     <p>
         <a th:href="@{/users/{user_id}/musiclists/{musiclist_id}/delete(user_id=${userId}, musiclist_id=${musicListId})}">Delete This List</a>
