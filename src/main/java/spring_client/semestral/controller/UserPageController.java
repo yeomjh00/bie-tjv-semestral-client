@@ -28,7 +28,6 @@ public class UserPageController {
 
     public static final String likedByUser = "/users/{id}/likedposts";
 
-    // @TODO: move to media controller
     public static final String userMusicLists = "/users/{id}/musiclists";
 
     @Autowired

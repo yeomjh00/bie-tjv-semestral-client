@@ -56,8 +56,8 @@ public class PostFuncController {
     public String createPost(Model model,
                              @PathVariable Long id,
                              PostDto form,
-                             @RequestParam("unhandledPictures") String urls,
-                             @RequestParam Long songId) {
+                             @RequestParam(value = "unhandledPictures", required = false) String urls,
+                             @RequestParam(required = false) Long songId) {
         UserDto user = userService.readById(id).orElseThrow(
                 () -> new IllegalArgumentException("User not found")
         );

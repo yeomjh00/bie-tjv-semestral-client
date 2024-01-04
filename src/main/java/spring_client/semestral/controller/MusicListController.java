@@ -10,6 +10,7 @@ import spring_client.semestral.data_format.MusicListDto;
 import spring_client.semestral.service.MusicAndListService;
 
 import javax.swing.text.html.Option;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -88,8 +89,9 @@ public class MusicListController {
                                            @PathVariable Long musicListId,
                                            @RequestParam("listName") String listName,
                                            @RequestParam("description") String description,
-                                           @RequestParam("musicIds") List<Long> musicIds){
+                                           @RequestParam(value = "musicIds", required = false) List<Long> musicIds){
         Optional<MusicListDto> musicListDto = musicAndListService.readMusicListById(musicListId);
+        List<Long> ids = Optional.ofNullable(musicIds).orElse(Collections.emptyList());
         if(musicListDto.isEmpty()){
             log.info("MusicList not found");
             return "redirect:/users/{userId}/musiclists";
@@ -98,7 +100,7 @@ public class MusicListController {
         MusicListDto mld = musicListDto.get();
         mld.setListName(listName);
         mld.setDescription(description);
-        musicAndListService.removeMusicAndUpdateList(mld, musicIds, musicListId);
+        musicAndListService.removeMusicAndUpdateList(mld, ids, musicListId);
 
         Optional<MusicListDto> updatedMusicList = musicAndListService.readMusicListById(musicListId);
         if(updatedMusicList.isEmpty()){
