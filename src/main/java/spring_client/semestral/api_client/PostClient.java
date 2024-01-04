@@ -61,7 +61,14 @@ public class PostClient {
 
     public PostDto updatePost(PostDto data) { // put /posts/{id}
         setCurrentPost(data.getId());
-        return currentPostRestClient.put().body(data).retrieve().toEntity(PostDto.class).getBody();
+
+        ResponseEntity<PostDto> response = currentPostRestClient.put()
+                .body(data).retrieve()
+                .toEntity(PostDto.class);
+        if (response.getStatusCode().equals(org.springframework.http.HttpStatus.OK)) {
+            return response.getBody();
+        }
+        return null;
     }
 
     public void deletePost(Long postId) { // delete /posts/{id}

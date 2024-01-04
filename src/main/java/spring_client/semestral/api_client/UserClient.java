@@ -62,9 +62,7 @@ public class UserClient {
         setCurrentUser(userId);
         return currentUserRestClient.get()
                 .accept(MediaType.APPLICATION_JSON)
-                .exchange((request, response) -> {
-                    return response.getStatusCode().equals(HttpStatus.OK);
-                });
+                .exchange((request, response) -> response.getStatusCode().equals(HttpStatus.OK));
     }
 
     public void updateCurrentUser(UserDto data) { // put /users/{id}
