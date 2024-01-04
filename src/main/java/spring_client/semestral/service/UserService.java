@@ -30,7 +30,8 @@ public class UserService {
     }
 
     public UserDto create(UserDto data) {
-        return userClient.create(data);
+        Optional<UserDto> user = userClient.create(data);
+        return user.orElseGet(UserDto::userNotFound);
     }
 
     public boolean setCurrentUser(Long id) {
@@ -53,10 +54,10 @@ public class UserService {
         }
     }
 
-    public boolean CheckValidityAndDuplicate(UserDto editedUser) {
-        if (editedUser.getUsername().equals(currentUser.getUsername())) {
+    public boolean CheckValidityAndDuplicate(UserDto request) {
+        if (request.getUsername().equals(currentUser.getUsername())) {
             return true;
         }
-        return !userClient.userExists(editedUser.getId());
+        return !userClient.userExists(request.getId());
     }
 }

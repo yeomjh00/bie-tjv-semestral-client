@@ -38,14 +38,16 @@ public class PostService {
     }
 
     public void createPost(PostDto form, UserDto user, String urls, Long songId) throws IllegalArgumentException {
-        if (songId != null)
-            form.setMusicDto(musicClient.readMusicById(songId));
+        MusicDto song = null;
+        if(songId != null)
+            song = musicClient.readMusicById(songId);
+
         PostDto postDto = PostDto.builder()
                 .authorUsername(user.getUsername())
                 .userId(user.getId())
                 .title(form.getTitle())
                 .content(form.getContent())
-                .musicDto(form.getMusicDto())
+                .musicDto(song)
                 .build();
         SetPictureDtosFromUrls(postDto, urls);
         postClient.create(postDto);
