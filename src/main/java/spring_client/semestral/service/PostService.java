@@ -105,4 +105,16 @@ public class PostService {
         }
         form.setPictureDtos(List.of(candidatePictures.toArray(PictureDto[]::new)));
     }
+
+    public String getPictureUris(List<PictureDto> pictureDtos) {
+        if (pictureDtos == null || pictureDtos.isEmpty()) {
+            return null;
+        }
+        ArrayList<String> uris = new ArrayList<>();
+        for (PictureDto dto : pictureDtos) {
+            String uri = dto.getUri() + ";" + dto.getHeight() + ";" + dto.getWidth();
+            uris.add(uri);
+        }
+        return uris.stream().reduce((a, b) -> a + "\n" + b).get();
+    }
 }

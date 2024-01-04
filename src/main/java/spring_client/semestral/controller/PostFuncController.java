@@ -5,21 +5,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import spring_client.semestral.data_format.PictureDto;
 import spring_client.semestral.data_format.PostDto;
 import spring_client.semestral.data_format.UserDto;
-import spring_client.semestral.service.PictureService;
 import spring_client.semestral.service.PostService;
 import spring_client.semestral.service.UserResourceService;
 import spring_client.semestral.service.UserService;
-
-import java.util.List;
 
 @Slf4j
 @Controller
 public class PostFuncController {
     private final PostService postService;
-    private final PictureService pictureService;
     private final UserService userService;
     private final UserResourceService userResourceService;
 
@@ -34,12 +29,10 @@ public class PostFuncController {
     @Autowired
     public PostFuncController( UserService userService,
                                PostService postService,
-                               UserResourceService userResourceService,
-                               PictureService pictureService){
+                               UserResourceService userResourceService){
         this.postService = postService;
         this.userService = userService;
         this.userResourceService = userResourceService;
-        this.pictureService = pictureService;
     }
 
     @GetMapping(newPost)
@@ -79,7 +72,7 @@ public class PostFuncController {
                 .orElseThrow(() -> new IllegalArgumentException("Please Access By correct id"));
         model.addAttribute("post", post);
         model.addAttribute("user", user);
-        String pictureUris = pictureService.getPictureUris(post.getPictureDtos());
+        String pictureUris = postService.getPictureUris(post.getPictureDtos());
         model.addAttribute("pictureUris", pictureUris);
         log.info("photos: {}", pictureUris);
         return "posts/edit";
