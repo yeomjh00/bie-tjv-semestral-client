@@ -50,7 +50,13 @@ public class PostClient {
 
     public PostDto readPostById(Long postId) { // get /posts/{id}
         setCurrentPost(postId);
-        return currentPostRestClient.get().retrieve().toEntity(PostDto.class).getBody();
+        ResponseEntity<PostDto> response = currentPostRestClient.get()
+                .retrieve()
+                .toEntity(PostDto.class);
+        if (response.getStatusCode().equals(org.springframework.http.HttpStatus.OK)) {
+            return response.getBody();
+        }
+        return null;
     }
 
     public PostDto updatePost(PostDto data) { // put /posts/{id}

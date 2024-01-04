@@ -47,10 +47,14 @@ public class UserClient {
                 .toEntity(UserDto.class).getBody();
     }
 
-    public UserDto readCurrentUserInfo() { // get /users/{id}
-        return currentUserRestClient.get()
+    public Optional<UserDto> readCurrentUserInfo() { // get /users/{id}
+        ResponseEntity<UserDto> response = currentUserRestClient.get()
                 .retrieve()
-                .toEntity(UserDto.class).getBody();
+                .toEntity(UserDto.class);
+        if (response.getStatusCode().equals(HttpStatus.OK)) {
+            return Optional.ofNullable(response.getBody());
+        }
+        return Optional.empty();
     }
 
     public boolean userExists(Long userId) {
