@@ -1,6 +1,7 @@
 package spring_client.semestral.exception;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -8,21 +9,31 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class BadRequestHandler {
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public String handle400(IllegalArgumentException e){
-        log.info("400 error: {}", e.getMessage());
+    @ExceptionHandler(value = IllegalArgumentException.class)
+    public String IllegalArgument(Model model, IllegalArgumentException e){
+        log.error("400 error with IllegalArgument : {}", e.getMessage());
+        model.addAttribute("errorMessage", e.getMessage());
         return "/error";
     }
 
-    @ExceptionHandler(NullPointerException.class)
-    public String handle400(NullPointerException e){
-        log.info("400 error: {}", e.getMessage());
+    @ExceptionHandler(value = NullPointerException.class)
+    public String NullPointer(Model model, NullPointerException e){
+        log.error("400 error with Null Pointer Problem: {}", e.getMessage());
+        model.addAttribute("errorMessage", e.getMessage());
         return "/error";
     }
 
-    @ExceptionHandler(IllegalAccessException.class)
-    public String handle400(IllegalAccessException e){
-        log.info("400 error: {}", e.getMessage());
+    @ExceptionHandler(value = IllegalAccessException.class)
+    public String IllegalAccess(Model model, IllegalAccessException e){
+        log.error("400 error with Illegal Access Problem: {}", e.getMessage());
+        model.addAttribute("errorMessage", e.getMessage());
+        return "/error";
+    }
+
+    @ExceptionHandler(value = NumberFormatException.class)
+    public String pictureInfoStringParsingError(Model model, NumberFormatException e){
+        log.error("Error occurred during parsing picture information string.: {}", e.getMessage());
+        model.addAttribute("errorMessage", e.getMessage());
         return "/error";
     }
 
