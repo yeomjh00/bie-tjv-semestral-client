@@ -5,16 +5,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import spring_client.semestral.data_format.PictureDto;
 import spring_client.semestral.data_format.PostDto;
 import spring_client.semestral.data_format.UserDto;
+import spring_client.semestral.service.PictureService;
 import spring_client.semestral.service.PostService;
 import spring_client.semestral.service.UserResourceService;
 import spring_client.semestral.service.UserService;
+
+import java.util.List;
 
 @Slf4j
 @Controller
 public class PostFuncController {
     private final PostService postService;
+    private final PictureService pictureService;
     private final UserService userService;
     private final UserResourceService userResourceService;
 
@@ -27,10 +32,14 @@ public class PostFuncController {
 
 
     @Autowired
-    public PostFuncController(PostService postService, UserService userService, UserResourceService userResourceService){
+    public PostFuncController( UserService userService,
+                               PostService postService,
+                               UserResourceService userResourceService,
+                               PictureService pictureService){
         this.postService = postService;
         this.userService = userService;
         this.userResourceService = userResourceService;
+        this.pictureService = pictureService;
     }
 
     @GetMapping(newPost)
@@ -43,19 +52,20 @@ public class PostFuncController {
         return "posts/newpost";
     }
 
-    //@TODO: Add Media
     @PostMapping(newPost)
-    public String createPost(Model model, @PathVariable Long id, PostDto form) {
+    public String createPost(Model model,
+                             @PathVariable Long id,
+                             PostDto form,
+                             @RequestParam("unhandledPictures") String urls,
+                             @RequestParam Long songId) {
         UserDto user = userService.readById(id).orElseThrow(
                 () -> new IllegalArgumentException("User not found")
         );
-        PostDto post = PostDto.builder()
-                .title(form.getTitle())
-                .content(form.getContent())
-                .authorUsername(user.getUsername())
-                .userId(user.getId())
-                .build();
-        postService.createPost(post);
+        try{
+            postService.createPost(form, user, urls, songId);
+        } catch (IllegalArgumentException e) {
+            return "redirect:/users/" + id;
+        }
         log.info("Creating new post");
         return "redirect:/users/" + id;
     }
@@ -69,17 +79,24 @@ public class PostFuncController {
                 .orElseThrow(() -> new IllegalArgumentException("Please Access By correct id"));
         model.addAttribute("post", post);
         model.addAttribute("user", user);
+        String pictureUris = pictureService.getPictureUris(post.getPictureDtos());
+        model.addAttribute("pictureUris", pictureUris);
+        log.info("photos: {}", pictureUris);
         return "posts/edit";
     }
 
-    //TODO
     @PostMapping(editSpecificPost)
-    public String editSpecificPostPost(Model model, @PathVariable Long id, @PathVariable Long postId, PostDto form){
+    public String editSpecificPostPost(Model model,
+                                       @PathVariable Long id,
+                                       @PathVariable Long postId,
+                                       @RequestParam String unhandledPictures,
+                                       @RequestParam Long songId,
+                                       PostDto form){
         PostDto post = postService.readPostById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("Post not found"));
         if (UserResourceService.checkPostOwnership(id, postId)){
-            PostDto updatedPost = postService.updatePostFromDto(postId, form);
-            return "redirect:/posts/" + postId;
+            PostDto updatedPost = postService.updatePostFromDto(post, form, unhandledPictures, songId);
+            return "redirect:/users/"+ id + "/myposts/" + postId;
         }
         return "redirect:/users/" + id + "/myposts";
     }
@@ -97,17 +114,19 @@ public class PostFuncController {
     }
 
     @PostMapping(likePost)
-    public String likePost(Model model, @PathVariable Long postId, @RequestParam Long userId){
+    public String likePost(@PathVariable Long postId, @RequestParam Long userId){
         PostDto post = postService.readPostById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("Post not found"));
-        userResourceService.likePost(postId, userId);
+        log.info("user {} liked post {}", userId, postId);
+        userResourceService.likePost(userId, postId);
         return "redirect:/posts/" + postId;
     }
 
     @DeleteMapping(likePost)
-    public String unLikePost(Model model, @PathVariable Long postId, @RequestParam Long userId){
+    public String unLikePost(@PathVariable Long postId, @RequestParam Long userId){
         PostDto post = postService.readPostById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("Post not found"));
+        log.info("user {} unliked post {}", userId, postId);
         userResourceService.unlikePost(userId, postId);
         return "redirect:/posts/" + postId;
     }

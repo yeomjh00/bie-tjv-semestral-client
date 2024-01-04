@@ -1,6 +1,7 @@
 package spring_client.semestral.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import spring_client.semestral.data_format.UserDto;
 import spring_client.semestral.service.UserService;
+
+import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -30,8 +33,9 @@ public class HomeController {
     @PostMapping(homePage)
     public String userPage(@RequestParam("postedId") Long postedId){
         log.info("given id: {}", postedId);
-        UserDto user = userService.readById(postedId)
-                        .orElseThrow(() -> new IllegalArgumentException("User not Found"));
+        UserDto user = userService.readById(postedId).orElseThrow(
+                () -> new IllegalArgumentException("User not found"));
+
         return "redirect:users/"+user.getId();
     }
 }

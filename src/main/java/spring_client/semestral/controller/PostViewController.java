@@ -50,7 +50,8 @@ public class PostViewController {
         PostDto post = postService.readPostById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("Post not found"));
         model.addAttribute("post", post);
-        log.info("Viewing specific post");
+        log.info("Viewing post with id: {}, likes: {}, pics: {}, music id: {}",
+                post.getId(), post.getNumberOfLikes(), post.getPictureDtos(), post.getMusicDto());
         return "posts/viewPost";
     }
 
@@ -61,6 +62,8 @@ public class PostViewController {
         UserDto user = userService.readById(id).orElseThrow(
                 () -> new IllegalArgumentException("User not found")
         );
+        log.info("Viewing post with id: {}, likes: {}, pics: {}, music id: {}",
+                post.getId(), post.getNumberOfLikes(), post.getPictureDtos(), post.getMusicDto());
         model.addAttribute("user", user);
         model.addAttribute("post", post);
         log.info("Viewing specific post");

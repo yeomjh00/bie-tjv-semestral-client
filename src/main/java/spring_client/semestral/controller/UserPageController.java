@@ -65,7 +65,7 @@ public class UserPageController {
         return "users/edit";
     }
 
-    //TODO: 1. Post -> Success/Failure  2. Check -> Reserve -> update
+
     @PostMapping(userPageEdit)
     public String userPageEditPost(@PathVariable Long id, UserDto form){
         log.info("trial: user information modified");
@@ -83,7 +83,7 @@ public class UserPageController {
 
         log.info("Valid for modifying user information!");
         user.setUsername(form.getUsername());
-        userResourceService.updateUserInfoByUserId(id, user);
+        userResourceService.updateUserInfoByUserId(id, editedUser);
         return "redirect:/users/"+id;
     }
 
