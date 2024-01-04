@@ -8,10 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 import spring_client.semestral.data_format.UserDto;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Component
 public class UserClient {
@@ -40,11 +37,15 @@ public class UserClient {
     }
 
 
-    public UserDto create(UserDto data) { // post /users
-        return userRestClient.post()
+    public Optional<UserDto> create(UserDto data) { // post /users
+        ResponseEntity<UserDto> response = userRestClient.post()
                 .body(data)
                 .retrieve()
-                .toEntity(UserDto.class).getBody();
+                .toEntity(UserDto.class);
+        if(response.getStatusCode().is2xxSuccessful()){
+            return Optional.of(Objects.requireNonNull(response.getBody()));
+        }
+        return Optional.empty();
     }
 
     public Optional<UserDto> readCurrentUserInfo() { // get /users/{id}
