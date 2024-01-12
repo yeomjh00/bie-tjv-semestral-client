@@ -149,7 +149,7 @@ public class MusicListController {
         Long currentAvailableMusics = musicAndListService.checkAvailableNumberOfMusics(userId, musicListId);
         log.info("current number of music: {}, tried to add {} musics",
                 currentAvailableMusics, musicListDto.get().getTrack().size());
-        if (musicAndListService.checkAvailableNumberOfMusics(userId, musicListId) <= 0){
+        if (musicAndListService.checkAvailableNumberOfMusics(userId, musicListId) <= musicIds.size()){
             log.info("Too many musics, {}", musicAndListService.checkAvailableNumberOfMusics(userId, musicListId));
             return "redirect:/users/{userId}/musiclists";
         }
